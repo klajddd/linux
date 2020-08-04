@@ -1,1 +1,4 @@
 . chown root file.txt          ===> Change owner/group of file, make root the owner.
+. ls -l                        ===> Lists files/folders in the long format 
+. lsof                         ===> (list of open files) Lists open files, and which process has opened them.
+                                    FD = File Descriptor
