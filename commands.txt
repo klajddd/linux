@@ -1,0 +1,1 @@
+. chown root file.txt          ===> Change owner/group of file, make root the owner.
