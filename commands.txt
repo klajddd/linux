@@ -1,4 +1,343 @@
-. chown root file.txt          ===> Change owner/group of file, make root the owner.
-. ls -l                        ===> Lists files/folders in the long format 
-. lsof                         ===> (list of open files) Lists open files, and which process has opened them.
+========================================== COMMANDS ==========================================
+
+$ chmod                        ===> Change mode. Used to change access permissions of files/dirs. 
+  chmod 777 filename.sh              -rw-r--r-- default permissions when creating a file
+                                     ---user  ---user group  ---others
+                                     0= 0= nothing 
+                                     1= 1= execute (x)
+                                     2= 2= write(w)
+                                     3= 2+1= w+x 
+                                     4= 4= read (r)
+                                     5= 4+1= r+x
+                                     6= 4+2= r+w 
+                                     7= 4+2+1= r+w+x
+                                     chmod 777 means r+w+x for user, group & others 
+                                     chmod +x filename.sh gives only executable permission 
+
+$ chown root file.txt          ===> Change owner/group of file, make root the owner.
+$ chown user:user file.txt     
+
+$ ls -l                        ===> Lists files/folders in the long format 
+$ lsof                         ===> (list of open files) Lists open files, and which process has opened them.
                                     FD = File Descriptor
+                                    Used for checknig whst process is using what resource, for example if we need to unmount a disc 
+                                    that does not want to unmount, we use lsof to see which pfocess is uinf it.
+$ lsof -u user_name            ===> List open files by the user name 
+
+$ cut                          ===> Displays columns of files delimited with column numbers.
+$ cut -c1-2 file_name.txt      ===> Diplays colummns 1 and 2 from file_name 
+
+$ sed                          ===> Text editor which performs editing operations in a non-interactive way. 
+$ sed 's/klajd/karaj/' file    ===> Replaces "klajd" with "karaj" in the file 
+
+$ uniq file_name               ===> Filter out duplicate lines in the file.  
+
+$ watch -flag command          ===> Execute a command periodically, showing the output in the screen, will show the outputs and errors 
+                               ===> By default it runs every two seconds 
+                                    -d highlights differences between successive updates 
+$ watch -d free -m             
+
+$ free -m                      ===> Displays total available free space, along with the memory used and swap memory in the system, and buffers used by the kernel 
+                                    shared - memory used by temp folders 
+                                    buffer - memory used by kernel buffers 
+                                    cache - memory used by the page cache and slabs 
+                                    -m - memory in megabytes 
+                                    -k - memory in kilobytes 
+                                    -b - memory in bytes (default)
+                                    -g - gigabytes 
+
+$ ssh                          ===> Secure shell, usually used for connecting to remote hosts
+$ ssh Max@192.168.3.82         ===> ssh user @ IP address
+                                    SSH and Telnet are used to connect to remote servers.
+                                    When the connection is done via SSH, the user''s  credentials are encrypted.
+                                    When the connection is done via Telnet, the user''s credentials are passed in as plain text, 
+                                    this makes Telnet unsercure.
+$ ssh user@master_ip_address   ===> Connect to the master machine 
+$ ssh-keygen -t rsa            ===> Generates a public-private authentication key pair. Auth keys allow users to connect to a remote server without supplying the pass. 
+                                    Each user needs to generate their own key. 
+
+$ systemctl                    ===> Start/stop/restart services/units running in the background
+$ systemctl status service_name 
+$ systemctl disable apache_2
+$ systemctl enable apache_2
+$ systemctl start nginx
+
+$ rsync                        ===> Transfer and sync files accross directories and machines.
+$ rsync src_dir/* new_dir/     ===> Sync/copy all files in the source dir to the new directory.
+
+
+
+$ telnet                       ===> Telnet is a protocol that provides 2-way communication for computers 
+                                    on the internet and local area networks.
+
+$ journalctl                   ===> Logging service information. 
+
+? what is a user made of       ???> File containing group and password information (etsy)???? 
+
+$ top                          ===> Presents CPU and memory usage of the Linux computer. 
+                                    It is a simple status summary. 
+
+$ ip                           ===> Show routing, devices, tunnels, used for performing network admin tasks. 
+                                    Used for configuring/modifying the default and static routing 
+                                    Setting up a tunnel or IP 
+                                    Listing IP addresses 
+                                    Modifying the status of an interface 
+                                    Assigning and deleting routs 
+$ ip address                   ===> Show all network IP address 
+$ ip link                      ===> Shows link layer information, it shows available devices, any device with a driver 
+                                    loaded is an available device 
+
+
+
+$ netstat -a                   ===> Displays network related information, such as IP prosts, such as network connections, routing tables, 
+                                    interface statistics, multiclass memberships.
+                                    -a = shows both listening and non-listening ports, both listening and non-listening sockets 
+                                    -at = lists all the available TCP ports 
+                                    0.0.0.0 ===> listening to all public addresses 
+
+$ ps aux | grep nginx          ===> Check a process's CPU usage 
+
+$ mount /dev/sda2 /mnt         ===> Mount a partition 
+
+$ nslookup google.com          ===> Name server lookup - useful for getting information from the DNS server. 
+                                    Network admin tool for querying the DNS to get domain name or IP addresses mappings. 
+
+$ curl options URL                              ===> Command line tool to transfer data to/from a network server using protocols like HTTP/SCP/FTP/SMTP etc.
+$ curl https://raw.github.com/core.c -o core.c  ===> Downlaod and save a single file from github (i.e. save response)
+                                                     Used to test rest APIs, if API returns JSON repsone, the response is printed in the window.
+                                                     Designed to work for automation, without user interaction, Transports multiple files at once.
+$ curl -d "first=klajd" http://somehost:500/api ===> POST request, -d stands for data. 
+$ curl -X PUT -d "first=KLAJD" some_link/api    ===> PUT request, updates data 
+$ curl -X DELETE some_link/api                  ===> DELETE request 
+$ curl -u klajd:my_pass http://some_url         ===> User authentication 
+$ curl -o file_name http://some_url             ===> Download response, save it in the file file_name, example a file.jpg
+$ curl -I https://some_url                      ===> Get response headers. 
+
+$ awk                          ===> Scripting language that manipulates data and generates reports; needs no compilation. 
+$ awk '{print}' file_name.txt  ===> Prints every line from the file. 
+$ awk '/Kla/ {print}' file.txt ===> Prints lines in file.txt that contain the string "Kla"
+
+$ env                          ===> Prints environment variables, also used to run a utility in a custom environment, also used by shell scripts to launch 
+                                    the correct interpreter. 
+$ env -i command               ===> Runs a command with an empty environment. 
+$ env -u variable_name         ===> Removes a variable from the environment. 
+
+$ ip tables                    ===> Command line interface, used to set up and maintain tables for the net filter firewall 
+                                    for IPv4, including Linux kernel. 
+
+$ service ip tables stop       ===> Disable the firewalls. 
+
+$ apt-get option package       ===> Tool for installing packages in Linux, (apt = advance packaging tool)
+$ apt-get install package
+
+$ df -h                        ===> Disk Free, shows the amount of available Disk space being used by the file systems.
+$ du                           ===> Disk Usage, shows the size of directory trees, including their contents and size of their individual files. 
+                               ===> We'd not want to pass the 80% threshold of the resources, we'd need to declutter if that threshold is passed.  
+$ du -h -d 1 /var/             ===> To check which part of the system is consuming a lot of Disk space. 
+
+$ ip addr show dev eth0     ===> Find the eth0 interface IP address (eth0  eth1 are interfaces used when connecting to the 
+                                    Internet using a cable, wlan is the interface used when connecting via wireless)
+
+$ ip route show                ===> Shows the default route 
+
+? init system                  ???> The init system is the first process started on Fedora after the kernel starts. 
+                                    In fact, the init system always gets the Process ID (PID) of 1 on a system. 
+                                    The init system then must start all the necessary daemons, background processes and services required to make the operating system work. 
+                                    Examples of such processes include starting up a boot screen, various parts of the networking stack, and hardware in your machine.
+
+$ cat f.txt | tr "[a-z]" "[A-Z]" => Command line utility for translating and deleting characters, 
+                                    supports upper/lower case, squeezing deleting characters, find replace etc.
+
+$ ifconfig                     ===> Config the Kernel resident network interfaces, used to show ip addresses and netmask, to an interface, 
+                                    to enable/disable an interface. 
+$ ifconfig -a                  ===> Shows all interfaces 
+$ ifconfig -s                  ===> Shows a shortlist of interfaces 
+
+$ eval command                 ===> Executes arguments as a shell command
+
+$ history 5                    ===> Shows last 5 commands 
+
+$ dd option=value              ===> dd if = /dev/hda of = /dev/hdb 
+                               ===> Use dd to copy the Hard Disc, if=input file, of=output file
+
+$ tar                          ===> Zip/unzip a file 
+$ tar -cvf fil_name src_folder ===> Zip file into a tar file  
+$ tar -xvf file_name           ===> Unzip tar file
+
+$ id                           ===> Prints identification info, such as uid, group id, groups it belongs to etc 
+$ id -g user_name              ===> Print the user groups of the user_name 
+$ id -G                        ===> Print all group IDs 
+$ id -n                        ===> Prints names instead of numbers 
+$ id -r                        ===> Prints real names instead of numbers 
+$ id -u                        ===> Prints only the effective user ID 
+$ id -help                     ===> Displays the help infomation 
+$ id -version                  ===> Displays the version information
+
+$ git config --global user.name klajd           ===> Set the email and author name to be used with your commits. 
+$ git config --global user.email e_addr         ===> Set the email and author name to be used with your commits. 
+$ git innit                    ===> Start a new repository.
+$ git clone repo_url           ===> Open a repo from an existing URL. 
+$ git add file_name            ===> Adds file to the staging area 
+$ git commit -m "Some message" ===> Records the file in the version history, permanently. 
+$ git rm file_name             ===> Deletes file from the working direcotry, and stages the deletion. 
+$ git show commit_id           ===> Shows the metadata and content changes of the specified commit. 
+$ git remote variable_name remote_server_link   ===> Connect your repo to the remote server. 
+$ git push remote_server:branch_name            ===> Delete branch in the remote repository 
+$ git push origin:my_branch 
+$ git pull repo_link           ===> Fetches changes from the remote server to the current directory 
+$ git branch                   ===> Lists all local branches in your local repository 
+$ git branch branch_name       ===> Create branch
+$ git branch -d branch_name    ===> Delete branch 
+$ git checkout branch_name     ===> Switch from one branch to another
+$ git checkout -b branch_name  ===> Create new branch, switch to it 
+$ git merge branch_name        ===> Merges the specified branche's history into the current branch 
+$ git rebase branch_name       ===> Moves all your work from the current branch to the master branch 
+
+$ >                            ===> Copies the data into a files, usage: "ls -LS > file.txt"
+
+$ cat file.txt                 ===> Prints file contents on the workspace window
+                               ===> Reads/Modifies/Concatenates files. 
+
+$ less file.txt                ===> Prints file contents on a different window, so workspace is "less" cluttered
+
+$ cat -b file.txt              ===> Adds line numbers to NON-BLANK lines before printing the content
+
+$ cat -n file.txt              ===> Adds line numbers to ALL lines before printing the content
+
+$ cd ~                         ===> Change dir to the root dir 
+
+$ grep -i cd file.txt          ===> Finds case insensitive "cd" from the file file.txt 
+$ grep some_word file.txt      ===> Finds a word in a file. 
+$ grep -n some_word file.txt   ===> Finds word with line number in the file. 
+
+$ sort file.txt                ===> Sorts the file content alphabetically. 
+$ sort -n file.txt             ===> Sorts the file content numerically. 
+$ sort -r file.txt             ===> Sorts the file content alphabetically in REVERSE order. 
+
+$ cp -v text.txt ./dir/        ===> Copies the file in the dir, prints in a verbose way what operation it 
+                                     performed, prints what is happening in the background
+$ cp -n text.txt ./dir/        ===> Copies the file in the dir, does not override the file if it already exists 
+$ cp -R                        ===> Copies dirs, recursively, including hidden files.
+
+??? enable vs start a service  ???> Starting a service is a one-time event, enabling a service sets it up so the system will start it at boot time. 
+
+$ rm -r                        ===> Removes even non-empty directories. 
+
+$ rmdir dir_name               ===> Removes directory
+$ rmdir -p dir_name            ===> Removes parent and child directories.
+
+$ su                           ===> change to super user, asks for authentication 
+$ sudo bash                    ===> change to super user, asks for authentication (same thing)
+$ su the_user_name             ===> switch back to other user 
+
+$ sudo useradd klajd           ===> Adds a user in the system.
+$ sudo passwd klajd            ===> Adds a password to the user that was created.
+$ sudo userdel klajd           ===> Deletes the user 
+$ sudo groupadd techies        ===> Adds user group 
+$ sudo groupdel techies        ===> Deletes user group 
+$ sudo                         ===> super user do, use to install packages 
+                                    sudo apt-get package ===> for debian based systems 
+                                    sudo yum install package ===> for redhat enterprise based systems 
+                                    sudo dnf install package ===> for fedora 
+
+
+ 
+Unix/Linux Command Reference
+===========================>  File Commands  ===========================>
+$ ls                        ===> Directory listing
+$ ls -al                    ===> Formatted listing with hidden files
+$ ls -lt                    ===> Sorting the Formatted listing by time modification
+$ cd dir                    ===> Change directory to dir
+$ cd                        ===> Change to home directory
+$ pwd                       ===> Show current working directory
+7. mkdir dir                 ===> Creating a directory dir
+8. cat >file                 ===> Places the standard input into the file
+9. more file                 ===> Output the contents of the file
+10. head file                ===> Output the first 10 lines of the file
+11. tail file                ===> Output the last 10 lines of the file
+12. tail -f file             ===> Output the contents of file as it grows,starting with the last 10 lines
+13. touch file               ===> Create or update file
+14. rm file                  ===> Deleting the file
+15. rm -r dir                ===> Deleting the directory
+16. rm -f file               ===> Force to remove the file
+17. rm -rf dir               ===> Force to remove the directory dir
+18. cp file1 file2           ===> Copy the contents of file1 to file2
+19. cp -r dir1 dir2          ===> Copy dir1 to dir2;create dir2 if not present
+ 
+
+ 
+20. mv file1 file2           ===> Rename or move file1 to file2,if file2 is an existing directory
+21. ln -s file link          ===> Create symbolic link link to file
+ 
+===========================>  Process management  ===========================>
+1. ps                        ===> To display the currently working processes
+2. top                       ===> Display all running process
+5. pkill pattern             ===> Will kill all processes matching the pattern
+6. bg                        ===> List stopped or background jobs,resume a stopped job in the background
+7. fg                        ===> Brings the most recent job to foreground
+8. fg n                      ===> Brings job n to the foreground
+ 
+ 
+==================================>  File permission  ==================================>
+1. chmod octal file          ===> Change the permission of file to octal, which can be found separately for user, group, world by adding,
+                                   • 4-read(r)
+                                   • 2-write(w)
+                                   • 1-execute(x)
+ 
+ 
+==================================>  Searching  ==================================>
+1. grep pattern file         ===> Search for pattern in file
+2. grep -r pattern dir       ===> Search recursively for pattern in dir
+3. command | grep pattern    ===> Search pattern in the output of a command
+4. locate file_name          ===> Find all instances of file_name
+5. find . -name filename     ===> Searches in the current directory (represented by a period) and below it, for files
+                                  and directories with names starting with filename
+6. pgrep pattern             ===> Searches for all the named processes , that matches with the pattern and, by default, returns their ID
+ 
+==================================>  System Info  ==================================>
+1. date                      ===> Show the current date and time
+2. cal                       ===> Show this month's calender
+3. uptime                    ===> Show current uptime
+4. w                         ===> Display who is on line
+5. whoami                    ===> Who you are logged in as
+6. finger user               ===> Display information about user
+7. uname -a                  ===> Show kernel information
+8. cat /proc/cpuinfo         ===> Cpu information
+9. cat proc/meminfo          ===> Memory information
+10. man command              ===> Show the manual for command
+11. df                       ===> Show the disk usage    
+12. du                       ===> Show directory space usage
+13. free                     ===> Show memory and swap usage
+14. whereis app              ===> Show possible locations of app
+15. which app                ===> Show which applications will be run by default
+ 
+ 
+==================================>Compression==================================>
+1. tar cf file.tar file      ===> Create tar named file.tar containing file
+2. tar xf file.tar           ===> Extract the files from file.tar
+3. tar czf file.tar.gz files ===> Create a tar with Gzip compression
+4. tar xzf file.tar.gz       ===> Extract a tar using Gzip
+5. tar cjf file.tar.bz2      ===> Create tar with Bzip2 compression
+6. tar xjf file.tar.bz2      ===> Extract a tar using Bzip2
+7. gzip file                 ===> Compresses file and renames it to file.gz
+8. gzip -d file.gz           ===> Decompresses file.gz back to file
+ 
+   
+==================================>Network==================================>
+1. ping host                 ===> Ping host and output results
+2. whois domain              ===> Get whois information for domains
+3. dig domain                ===> Get DNS information for domain
+4. dig -x host               ===> Reverse lookup host
+5. wget file                 ===> Download file
+6. wget -c file              ===> Continue a stopped download
+ 
+   
+==================================>Shortcuts==================================>
+1. ctrl+c                    ===> Halts the current command
+2. ctrl+z                    ===> Stops the current command, resume with "fg" in the foreground or "bg" in the background
+3. ctrl+d                    ===> Logout the current session, similar to exit
+4. ctrl+w                    ===> Erases one word in the current line
+5. ctrl+u                    ===> Erases the whole line
+6. ctrl+r                    ===> Type to bring up a recent command
+7. !!                        ===> Repeats the last command
+8. exit                      ===> Logout the current session
